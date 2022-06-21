@@ -13,3 +13,41 @@ export const ADD_CAR = gql`
         }
     }
 `
+
+export const ADD_USER = gql`
+    mutation addUser ($input: UserInput){
+        AddUser(input: $input){
+            name
+            email
+            phone
+        }
+    }
+`
+
+export const ADD_BOOKINGS = gql`
+    mutation AddBookingData ($input: BookingInput){
+        AddBookings(input: $input){
+            name
+            email
+            phone
+            img
+            carName
+            perDayPrice
+            seat
+            carImg
+            licenseFront
+            licenseBack
+            NidFront
+            NidBack
+            licenseNum
+            NidNum
+            payment
+            location
+            diffDays
+            startDate
+            endDate
+            licenseDate
+            secretKey
+        }
+    }
+`

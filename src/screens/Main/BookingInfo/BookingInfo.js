@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View , StyleSheet, Button, TouchableOpacity} from 'react-native';
+import { View , StyleSheet, Button, TouchableOpacity, Alert} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../../components/Header/Header';
 import Input from '../../../components/Input/Input';
@@ -10,14 +10,15 @@ import { colors } from '../../../theme/colors';
 import Buttons from '../../../components/Buttons/Buttons';
 import { Ionicons } from '@expo/vector-icons'; 
 
-const BookingInfo = ({navigation}) => {
+const BookingInfo = ({route, navigation}) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
     const [mode, setMode] = useState('date');
     const [show, setShow] = useState(false);
     const [show2, setShow2] = useState(false)
     const [location, setLocation] = useState('')
-
+    const {info} = route.params;
+    
     const onChange = (event, selectedDate) => {
       const currentDate = selectedDate;
       setShow(false);
@@ -50,6 +51,14 @@ const BookingInfo = ({navigation}) => {
     const diffTime = Math.abs(date2 - date1);
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+    const NavigationHandler = () => {
+      if(diffDays && endDate && startDate && location){
+        navigation.navigate('DrivingLicense', {info: {...info, location: location, diffDays: diffDays, startDate: startDate.toLocaleString(), endDate: endDate.toLocaleString()}})
+      }
+      else{
+        Alert.alert("Please enter booking info correctly");
+      }
+    }
   return (
     <SafeAreaView>
     <Header title='Time & Location' backbtn={true} />
@@ -83,7 +92,7 @@ const BookingInfo = ({navigation}) => {
     <MainText  style={styles.dateText}>Selected: {endDate.toLocaleString()}</MainText>
     </View>
 
-    <Buttons onPress={() => navigation.navigate('DrivingLicense')} title='Next' customStyles2={styles.button2} customStyles={styles.buttons}/>
+    <Buttons onPress={NavigationHandler} title='Next' customStyles2={styles.button2} customStyles={styles.buttons}/>
 
       {show && (
         <DateTimePicker

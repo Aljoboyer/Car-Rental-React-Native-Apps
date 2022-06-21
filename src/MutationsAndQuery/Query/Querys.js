@@ -22,3 +22,41 @@ export const CREATE_PAYMENT_INTENT = gql`
     }
   }
 `
+export const GET_USER_INFO = gql`
+    query GetUser($email: String) {
+        User (email: $email){
+        name
+        phone
+        email
+        img
+    }
+  }
+`
+
+export const GET_USERS_BOOKINGS = gql`
+    query GetBookings{
+        Bookings{
+            id
+            name
+            email
+            phone
+            img
+            carName
+            perDayPrice
+            seat
+            carImg
+            licenseFront
+            licenseBack
+            NidFront
+            NidBack
+            licenseNum
+            NidNum
+            payment
+            location
+            diffDays
+            startDate
+            endDate
+            licenseDate
+    }
+  }
+`

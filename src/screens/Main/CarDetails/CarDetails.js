@@ -9,6 +9,10 @@ import Buttons from '../../../components/Buttons/Buttons';
 
 const CarDetails = ({route, navigation}) => {
     const {car} = route.params;
+
+    const NavigationHandler = () => {
+        navigation.navigate('BookingInfo',{info: {carName: car.carName,carimg: car.carimg, seat: car.seat, price: car.perDayPrice}})
+    }
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>
@@ -22,7 +26,7 @@ const CarDetails = ({route, navigation}) => {
                     <MainText preset='h3' style={{paddingLeft: 10,  color: colors.Green}}>{car.carName}</MainText>
                     <MainText preset='h5' style={{paddingLeft: 10,fontWeight: 'bold', color: 'gray'}}>${car.perDayPrice} Per Day</MainText>
                 </View>
-                <TouchableOpacity onPress={()=> navigation.navigate('BookingInfo')} style={styles.continueBtn}>
+                <TouchableOpacity onPress={NavigationHandler} style={styles.continueBtn}>
                     <MainText preset='h5' style={{color: 'white'}}>Continue</MainText>
                     <MaterialIcons name="keyboard-arrow-right" size={28} color="white" />
                 </TouchableOpacity>
@@ -40,7 +44,6 @@ const CarDetails = ({route, navigation}) => {
             <MainText preset='p' style={{color: 'gray', paddingTop: 10}}>{car.description}</MainText>
             
         </View>
-
       </ScrollView>
     </SafeAreaView>
   );

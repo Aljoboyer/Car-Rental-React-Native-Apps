@@ -5,11 +5,11 @@ import MainText from '../MainText/MainText';
 import { MaterialCommunityIcons ,MaterialIcons } from '@expo/vector-icons'; 
 import { colors } from '../../theme/colors';
 
-const Car = ({cars, navigation}) => {
+const HomeCar = ({cars, navigation}) => {
 
 const CarItem = ({ item }) => (
     <View style={styles.carItem}>
-        <Image style={styles.CarImg} source={{uri: `http://192.168.43.45:4000/${item.carimg}`}} />
+        <Image style={styles.CarImg} source={{uri: `http://192.168.10.106:4000/${item.carimg}`}} />
         <MainText preset='h4' style={styles.CarName}>{item.carName}</MainText>
 
         <View style={styles.InfoContianer}>
@@ -46,7 +46,7 @@ const CarItem = ({ item }) => (
   );
 }
 
-export default Car;
+export default HomeCar;
 
 const styles = StyleSheet.create({
   carContainer:{

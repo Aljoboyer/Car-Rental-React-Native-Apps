@@ -17,6 +17,8 @@ import NidCard from './src/screens/Main/NidCard/NidCard';
 import PaymentApp from './src/screens/Main/Payment/PaymentApp';
 import Success from './src/screens/Main/Payment/Success/Success';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useFirebase from './src/FirebaseSetup/FirebaseAuth';
+import BookingDetails from './src/screens/Main/MyBooking/BookingDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -30,10 +32,11 @@ const AppTheme = {
 
 
 export default function App() {
+  const {user, loading} = useFirebase();
 
   const client = new ApolloClient({
     link: createUploadLink({
-      uri: "http://192.168.43.45:4000/graphql"
+      uri: "http://192.168.10.106:4000/graphql"
     }),
     cache: new InMemoryCache(),
   })
@@ -47,28 +50,37 @@ export default function App() {
 
   if(!loaded){
     return  (
-      <SafeAreaView>
+      <SafeAreaView style={styles.LodingContainer}>
         <ActivityIndicator color="blue" size="large" />
       </SafeAreaView>
     )
   }
-
+  if(loading){
+    return  (
+      <SafeAreaView style={styles.LodingContainer}>
+        <ActivityIndicator color="blue" size="large" />
+      </SafeAreaView>
+    )
+  }
   return (
     <ApolloProvider client={client}>
       <NavigationContainer theme={AppTheme}> 
         <Stack.Navigator initialRouteName='Login' >
-          <Stack.Screen options={{headerShown: false}}  name='Login' component={Login}/>
-          <Stack.Screen options={{headerShown: false}}  name='Register' component={Register}/>
-          <Stack.Screen options={{headerShown: false}}  name='HomeRoute' component={HomeRoute}/>
-          <Stack.Screen  options={{headerShown: false}}  name='CarDetails' component={CarDetails}/>
-          <Stack.Screen  options={{headerShown: false}}  name='BookingInfo' component={BookingInfo}/>
-          <Stack.Screen  options={{headerShown: false}}  name='DrivingLicense' component={DrivingLicense}/>
-          <Stack.Screen  options={{headerShown: false}}  name='NidCard' component={NidCard}/>
-          <Stack.Screen  options={{headerShown: false}}  name='PaymentApp' component={PaymentApp}/>
-          <Stack.Screen  options={{headerShown: false}}  name='Success' component={Success}/>
+          {
+            user?.email ? <><Stack.Screen options={{headerShown: false}}  name='HomeRoute' component={HomeRoute}/>
+            <Stack.Screen  options={{headerShown: false}}  name='CarDetails' component={CarDetails}/>
+            <Stack.Screen  options={{headerShown: false}}  name='BookingInfo' component={BookingInfo}/>
+            <Stack.Screen  options={{headerShown: false}}  name='DrivingLicense' component={DrivingLicense}/>
+            <Stack.Screen  options={{headerShown: false}}  name='NidCard' component={NidCard}/>
+            <Stack.Screen  options={{headerShown: false}}  name='PaymentApp' component={PaymentApp}/>
+            <Stack.Screen  options={{headerShown: false}}  name='Success' component={Success}/>
+            <Stack.Screen  options={{headerShown: false}}  name='BookingDetails' component={BookingDetails}/>
+            </> : <><Stack.Screen options={{headerShown: false}}  name='Login' component={Login}/>
+            <Stack.Screen options={{headerShown: false}}  name='Register' component={Register}/></> 
+          }
         </Stack.Navigator> 
       </NavigationContainer>
-    </ApolloProvider>
+    </ApolloProvider> 
   );
 }
 
@@ -77,4 +89,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
   },
+  LodingContainer:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });

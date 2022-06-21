@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet,Image, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet,Image, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../../components/Header/Header';
 import MainText from '../../../components/MainText/MainText';
@@ -9,8 +9,19 @@ import Input from '../../../components/Input/Input';
 import * as ImagePicker from 'expo-image-picker';
 import Buttons from '../../../components/Buttons/Buttons';
 
-const NidCard = () => {
+const NidCard = ({route,navigation}) => {
     const [image, setImage] = useState([]);
+    const [nidNum, setNidNum] = useState(null)
+    const {info} = route.params;
+    
+    const NavigationHandler = () => {
+      if(image.length === 2 && nidNum){
+        navigation.navigate('PaymentApp', {info: {...info, NidFront: image[0], NidBack: image[1], NidNum: nidNum}})
+      }
+      else{
+        Alert.alert('Please enter your National ID information properly')
+      }
+    }
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -54,9 +65,9 @@ const NidCard = () => {
         <View style={styles.inputContainer}>
             <View style={styles.inputBox}>
               <FontAwesome name="drivers-license-o" size={30} color="black" />
-              <Input customStyles={styles.inputs} placeholder='Your national ID card number' />
+              <Input customStyles={styles.inputs} placeholder='Your national ID card number' onChangeText={(text) => setNidNum(text)} />
             </View>
-            <Buttons title='Next' customStyles2={styles.text} customStyles={styles.buttons} />
+            <Buttons onPress={NavigationHandler} title='Next' customStyles2={styles.text} customStyles={styles.buttons} />
         </View>
       </ScrollView>
     </SafeAreaView>

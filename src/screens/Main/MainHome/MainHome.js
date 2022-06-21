@@ -2,12 +2,12 @@ import { useQuery } from '@apollo/client';
 import React from 'react';
 import {TouchableOpacity, ImageBackground, View, FlatList, ScrollView, Image, StyleSheet, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Car from '../../../components/Car/Car';
 import MainText from '../../../components/MainText/MainText';
 import { GET_ALL_CARS } from '../../../MutationsAndQuery/Query/Querys';
 import { colors } from '../../../theme/colors';
 import { BRAND_LOGOS } from './BrandImg';
 import { FontAwesome, AntDesign  } from '@expo/vector-icons'; 
+import HomeCar from '../../../components/HomeCar/HomeCar';
 
 
 const MainHome = ({navigation}) => {
@@ -43,7 +43,7 @@ const MainHome = ({navigation}) => {
             showsHorizontalScrollIndicator={true}
           />
         </View>
-        <Car cars={cars} navigation={navigation} />
+        <HomeCar cars={cars} navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
   );

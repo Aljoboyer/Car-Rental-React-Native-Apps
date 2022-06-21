@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, View, StyleSheet, Pressable, Image, ScrollView} from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Pressable, Image, ScrollView, Alert} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MainText from '../../../components/MainText/MainText';
 import Header from '../../../components/Header/Header';
@@ -15,8 +15,9 @@ const DrivingLicense = ({route, navigation}) => {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [image, setImage] = useState([]);
-  // const {info} = route.params;
- 
+  const [licenseNum, setLicenseNum] = useState(null);
+  const {info} = route.params;
+
   const ShowPicker = (mode) => {
     setShow(true);
     setMode(mode);
@@ -42,6 +43,14 @@ const DrivingLicense = ({route, navigation}) => {
     }
   };
 
+  const NavigationHandler = () => {
+    if(image.length === 2 && date && licenseNum){
+      navigation.navigate('NidCard', {info: {...info, licenseFront: image[0], licenseBack: image[1],licenseDate: date.toLocaleDateString(), licenseNum: licenseNum}})
+    }
+    else{
+      Alert.alert('Please enter your driving license information properly')
+    }
+  }
   return (
     <SafeAreaView>
       <ScrollView>
@@ -68,7 +77,7 @@ const DrivingLicense = ({route, navigation}) => {
         <View style={styles.inputContainer}>
             <View style={styles.inputBox}>
               <FontAwesome name="drivers-license-o" size={30} color="black" />
-              <Input customStyles={styles.inputs} placeholder='Your license number' />
+              <Input customStyles={styles.inputs} placeholder='Your license number' onChangeText={(text) => setLicenseNum(text)} />
             </View>
             <Pressable onPress={() => ShowPicker('date') } style={styles.inputBox}>
               <FontAwesome5 name="calendar-alt" size={37} color="black" />
@@ -83,7 +92,7 @@ const DrivingLicense = ({route, navigation}) => {
               onChange={onChange}
             />
             )}
-            <Buttons onPress={() => navigation.navigate('NidCard')} title='Next' customStyles2={styles.text} customStyles={styles.buttons} />
+            <Buttons onPress={NavigationHandler} title='Next' customStyles2={styles.text} customStyles={styles.buttons} />
         </View>
       </ScrollView>
     </SafeAreaView>

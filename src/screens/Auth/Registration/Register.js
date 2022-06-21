@@ -5,10 +5,32 @@ import {Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome  } from '@e
 import { colors } from '../../../theme/colors';
 import Input from '../../../components/Input/Input';
 import Buttons from '../../../components/Buttons/Buttons';
+import { useState } from 'react';
+import useFirebase from '../../../FirebaseSetup/FirebaseAuth';
+import { useMutation } from '@apollo/client';
+import { ADD_USER } from '../../../MutationsAndQuery/Mutation/Mutations';
 
 const Register = ({navigation}) => {
+  const [regData, setRegData] = useState({});
+  const { RegisterUser, setUser } = useFirebase()
+  const [AddUser] = useMutation(ADD_USER);
+
+  const RegisterHandler = () => {
+    RegisterUser(regData.email, regData.password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      // ...
+      setUser(user);
+      AddUser({variables: {input: {name: regData.name, email: regData.email, phone: regData.phone}}})
+    })
+    .catch((error) => {
+        console.log(error.message)
+    });
+  }
   return (
-    <ScrollView>
+    <SafeAreaView>
+      <ScrollView>
       <View style={styles.LoginIntro}>
         <View style={styles.iconContainer}>
           <MaterialCommunityIcons name="car-sports" size={150} color="white" />
@@ -21,27 +43,37 @@ const Register = ({navigation}) => {
         <MainText style={{color: colors.Green, alignSelf: 'center', marginVertical: 20}} preset='h3'>Register To Aj-Car-Rental</MainText>
         <View style={styles.InputView}>
             <Ionicons name="person" size={24} color={colors.Green} />
-            <Input placeholder='Full Name' />
+            <Input placeholder='Full Name' onChangeText={(text) => {
+        setRegData({...regData, name: text})
+      }}/>
         </View>
         <View style={styles.InputView}>
             <MaterialIcons name="email" size={24} color={colors.Green} />
-            <Input placeholder='Your email' />
+            <Input placeholder='Your email' onChangeText={(text) => {
+        setRegData({...regData, email: text})
+      }} />
         </View>
         <View style={styles.InputView}>
             <FontAwesome name="mobile-phone" size={30} color={colors.Green} />
-            <Input placeholder='Mobile number' />
+            <Input placeholder='Mobile number' onChangeText={(text) => {
+        setRegData({...regData, phone: text})
+      }} />
         </View>
         <View style={styles.InputView}>
             <FontAwesome name="lock" size={24} color={colors.Green} />
-            <Input placeholder='password' secureTextEntry={true}/>
+            <Input placeholder='password' secureTextEntry={true} onChangeText={(text) => {
+        setRegData({...regData, password: text})
+      }}/>
         </View>
         
         <View style={styles.InputView}>
             <FontAwesome name="lock" size={24} color={colors.Green} />
-            <Input placeholder='Re-enter password' secureTextEntry={true}/>
+            <Input placeholder='Re-enter password' secureTextEntry={true} onChangeText={(text) => {
+        setRegData({...regData, password2: text})
+      }}/>
         </View>
 
-        <Buttons title='Register' customStyles={styles.buttons} />
+        <Buttons title='Register' customStyles={styles.buttons} onPress={RegisterHandler} />
       </View>
 
       <View style={styles.SocialContainer}>
@@ -52,7 +84,8 @@ const Register = ({navigation}) => {
             <MainText preset='h5'>Already have an Account ? <MainText preset='h5' style={{fontWeight: 'bold', color: colors.Green}}>Login Now</MainText></MainText>
           </Pressable> 
       </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

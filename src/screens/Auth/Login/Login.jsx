@@ -5,8 +5,18 @@ import {Ionicons, MaterialCommunityIcons, MaterialIcons, FontAwesome  } from '@e
 import { colors } from '../../../theme/colors';
 import Input from '../../../components/Input/Input';
 import Buttons from '../../../components/Buttons/Buttons';
+import { useState } from 'react';
+import useFirebase from '../../../FirebaseSetup/FirebaseAuth';
 
 const Login = ({navigation}) => {
+  const [logData, setLogData] = useState({});
+  const {LoginUser} = useFirebase();
+
+  const LoginHandler = () => {
+    console.log('log', logData)
+    LoginUser(logData.email, logData.password) 
+  }
+
   return (
     <SafeAreaView>
       <View style={styles.LoginIntro}>
@@ -21,13 +31,17 @@ const Login = ({navigation}) => {
         <MainText style={{color: colors.Green, alignSelf: 'center', marginVertical: 20}} preset='h1'>Login-Here</MainText>
         <View style={styles.InputView}>
             <MaterialIcons name="email" size={24} color={colors.Green} />
-            <Input placeholder='useremail' />
+            <Input placeholder='useremail' onChangeText={(text) => {
+        setLogData({...logData, email: text})
+      }} />
         </View>
         <View style={styles.InputView}>
             <FontAwesome name="lock" size={24} color={colors.Green} />
-            <Input placeholder='password' secureTextEntry={true}/>
+            <Input placeholder='password' secureTextEntry={true} onChangeText={(text) => {
+        setLogData({...logData, password: text})
+      }}/>
         </View>
-        <Buttons title='Login' customStyles={styles.buttons} />
+        <Buttons title='Login' customStyles={styles.buttons} onPress={LoginHandler} />
       </View>
       <View style={styles.SocialContainer}>
         <MainText preset='h4' style={{fontWeight: 'bold', color: colors.Green}}>OR</MainText>
