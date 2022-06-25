@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet , Image, ScrollView} from 'react-native';
+import { View, Image, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../../components/Header/Header';
 import MainText from '../../../components/MainText/MainText';
+import { BookingDetailstyles } from '../../../Styles/MybookingStyles';
 import { colors } from '../../../theme/colors';
 import { BookingItems } from './MyBooking';
 
@@ -10,7 +11,7 @@ const ImageView = ({title, img1 , img2}) => {
     return (
     <View >
         <MainText preset='h4' style={{color: colors.Green, marginVertical: 15, paddingLeft: 20, marginTop: 20, fontWeight: 'bold'}}>{title}</MainText>
-        <View style={styles.licenseImgView}>
+        <View style={BookingDetailstyles.licenseImgView}>
             <Image source={{ uri: `data:image/gif;base64,${img1}`}} style={{ width: 170, height: 170 }} />
             <Image source={{ uri: `data:image/gif;base64,${img2}`}} style={{ width: 170, height: 170}} />
         </View>
@@ -24,7 +25,7 @@ const BookingDetails = ({route}) => {
     <SafeAreaView >
         <ScrollView>
         <Header backbtn={true} title="Your Booking Details" />
-        <View style={styles.carDetails}>
+        <View style={BookingDetailstyles.carDetails}>
             <BookingItems item={booking} />
         </View>
         <View style={{alignSelf: 'center', marginVertical: 10}}>
@@ -39,16 +40,3 @@ const BookingDetails = ({route}) => {
 }
 
 export default BookingDetails;
-
-const styles = StyleSheet.create({
-    carDetails:{
-      paddingRight: 10
-    },
-    licenseImgView:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 20,
-        
-    }
-  });

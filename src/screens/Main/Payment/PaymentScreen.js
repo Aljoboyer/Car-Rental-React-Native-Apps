@@ -11,6 +11,7 @@ import { colors } from '../../../theme/colors';
 import MainText from '../../../components/MainText/MainText';
 import useFirebase from '../../../FirebaseSetup/FirebaseAuth';
 import { ADD_BOOKINGS } from '../../../MutationsAndQuery/Mutation/Mutations';
+import { Paymentstyles } from '../../../Styles/CarDetailsStyle';
 
 const TripInfo = ({title1, title2}) => {
   return (
@@ -57,9 +58,6 @@ const PaymentScreen = ({info, navigation}) => {
 
   const clientSecret = secretKay?.GetPaymentIntent?.clientSecret;
 
-// const bookingdata = {name: userInfo?.User?.name, email: userInfo?.User?.email, phone: userInfo?.User?.phone, img: userInfo?.User?.img ? userInfo?.User?.img : 'nan', carName: info.carName, carimg: info.carimg, seat: info.seat, perDayPrice: info.price, location: info.location, diffDays: info.diffDays + '', startDate: info.startDate, endDate: info.endDate, licenseDate: info.licenseDate, licenseNum: info.licenseNum, NidNum: info.NidNum, payment: PriceAmount}; 
-// console.log('mainData', bookingdata)
-
 const PaymentSubmit = async () => {
   try {
     const initSheet = await stripe.initPaymentSheet({
@@ -93,16 +91,16 @@ const PaymentSubmit = async () => {
   <SafeAreaView>
     <ScrollView>
       <Header title='Payment' backbtn={true} />
-      <View style={styles.cardLogo}>
+      <View style={Paymentstyles.cardLogo}>
         <EvilIcons name="credit-card" size={80} color="white" />
         <MainText preset='h4' style={{color: 'white'}}>Pay</MainText>
       </View>
       <View>
         
         <TripInfo title1='Car' title2={info.carName}/>
-        <View style={styles.Lines} />
+        <View style={Paymentstyles.Lines} />
         <TripInfo title1='Pick-up location' title2={info.location}/>
-        <View style={styles.Lines} />
+        <View style={Paymentstyles.Lines} />
         <TripInfo title1='Trip Dates' title2={`${info.startDate} To ${info.endDate}`}/>
 
         <View style={{marginVertical: 20}}>
@@ -120,23 +118,3 @@ const PaymentSubmit = async () => {
 }
 
 export default PaymentScreen;
-
-const styles = StyleSheet.create({
-  cardLogo: {
-    backgroundColor: colors.Green,
-    width: 150,
-    height: 150,
-    marginHorizontal: 120,
-    marginTop: 20,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 100
-  },
-  Lines: {
-    borderBottomColor: 'gray', borderBottomWidth: 0.5, marginHorizontal: 30, marginTop: 7
-  }
-});
-
-
-// name: userInfo?.User?.name, email: userInfo?.User?.email, phone: userInfo?.User?.phone, img: userInfo?.User?.img ? userInfo?.User?.img : 'nan', carName: info.carName, carimg: info.carimg, seat: info.seat, perDayPrice: info.price, location: info.location, diffDays: info.diffDays + '', startDate: info.startDate, endDate: info.endDate, licenseFront: info.licenseFront, licenseBack: info.licenseBack, licenseDate: info.licenseDate, licenseNum: info.licenseNum, NidFront: info.NidFront, NidBack: info.NidBack, NidNum: info.NidNum, payment: PriceAmount

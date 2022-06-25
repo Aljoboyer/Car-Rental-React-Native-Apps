@@ -6,26 +6,27 @@ import MainText from '../../../components/MainText/MainText';
 import { GET_ALL_CARS } from '../../../MutationsAndQuery/Query/Querys';
 import { colors } from '../../../theme/colors';
 import { BRAND_LOGOS } from './BrandImg';
-import { FontAwesome, AntDesign  } from '@expo/vector-icons'; 
+import { FontAwesome, AntDesign , MaterialIcons } from '@expo/vector-icons'; 
 import HomeCar from '../../../components/HomeCar/HomeCar';
+import { HomeCarstyles, Homestyles } from '../../../Styles/HomeStyle';
 
 
 const MainHome = ({navigation}) => {
   const {data: cars} = useQuery(GET_ALL_CARS);
 
   const renderItem = ({ item }) => (
-    <Pressable>
-        <Image style={styles.BrandImg} source={item.img}/>
-    </Pressable>
+    <TouchableOpacity onPress={() => navigation.navigate('BrandCar', {brand: item.brand})}>
+        <Image style={Homestyles.BrandImg} source={item.img}/>
+    </TouchableOpacity>
   );
 
   return (
     <SafeAreaView>
       <ScrollView>
         <ImageBackground source={require('../../../../assets/bgss.png')} resizeMode="cover" >
-            <View style={styles.HomeHeader}> 
-                <View style={styles.searchContainer}>
-                  <TouchableOpacity style={styles.searchBar}>
+            <View style={Homestyles.HomeHeader}> 
+                <View style={Homestyles.searchContainer}>
+                  <TouchableOpacity onPress={() => navigation.navigate('ViewAllFilter', {name: 'Filter Car'})} style={Homestyles.searchBar}>
                     <AntDesign name="filter" size={30} color="white" />
                     <MainText preset='title2' style={{color: 'white', marginLeft: 15}}>Filter your car</MainText>
                   </TouchableOpacity>
@@ -33,8 +34,8 @@ const MainHome = ({navigation}) => {
             </View>
         </ImageBackground>
 
-        <MainText preset='h3' style={styles.brandTitle}>Find car by brand</MainText>
-        <View style={styles.brandContainer}>
+        <MainText preset='h3' style={Homestyles.brandTitle}>Find car by brand</MainText>
+        <View style={Homestyles.brandContainer}>
           <FlatList
             data={BRAND_LOGOS}
             renderItem={renderItem}
@@ -43,7 +44,15 @@ const MainHome = ({navigation}) => {
             showsHorizontalScrollIndicator={true}
           />
         </View>
-        <HomeCar cars={cars} navigation={navigation} />
+        <View style={Homestyles.TitleContainer}>
+            <MainText preset="h2" style={Homestyles.containerTitle}>Available car</MainText>
+            <TouchableOpacity onPress={() => navigation.navigate('ViewAllFilter', {name: 'All Car Here'})} style={{flexDirection: 'row', justifyContent: 'center', alignItems:  'center'}}> 
+              <MainText preset='title4' style={{ color: 'gray'}} >View All </MainText><MaterialIcons name="keyboard-arrow-right" size={28} color="gray" />
+            </TouchableOpacity>
+          </View>
+          <View style={HomeCarstyles.carContainer}>
+            <HomeCar cars={cars?.GetCars} navigation={navigation} horizontal={true}/>
+          </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -51,48 +60,3 @@ const MainHome = ({navigation}) => {
 
 export default MainHome;
 
-const styles = StyleSheet.create({
-  BrandImg: {
-    height: 80,
-    width: 100,
-    marginHorizontal: 10,
-    borderRadius: 10,
-  },
-  brandTitle:{
-    color: colors.Green,
-    fontWeight: 'bold',
-    paddingLeft: 20,
-    paddingTop: 20
-  },
-  brandContainer:{
-    paddingLeft: 5,
-    paddingTop: 15
-  },
-  HomeHeader:{
-    height: 250,
-    justifyContent: 'center',
-    alignItems: 'center'
-   },
-   searchBar: {
-    width: 320,
-    height: 60,
-    borderColor: 'white',
-    borderWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    borderRadius: 35
-   },
-   searchContainer:{
-    width: 400,
-    height: 250,
-    borderColor: 'white',
-    borderWidth: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.429)",
-   }
-});

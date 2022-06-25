@@ -4,6 +4,6 @@ export const BRAND_LOGOS = [
     { brand: 'BMW' ,img: require('../../../../assets/bmw.png')},
     { brand: 'Rolls Royce' ,img: require('../../../../assets/RollsRoyce.jpg')},
     { brand: 'Tesla' ,img: require('../../../../assets/tesla.jpg')},
-    { brand: 'Farrari' ,img: require('../../../../assets/farrari.png')},
+    { brand: 'Ferrari' ,img: require('../../../../assets/farrari.png')},
     { brand: 'Lemborgini' ,img: require('../../../../assets/lemborgini.png')},
 ]

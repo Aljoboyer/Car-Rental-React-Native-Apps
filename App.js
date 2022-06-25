@@ -19,6 +19,10 @@ import Success from './src/screens/Main/Payment/Success/Success';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useFirebase from './src/FirebaseSetup/FirebaseAuth';
 import BookingDetails from './src/screens/Main/MyBooking/BookingDetails';
+import EditProfile from './src/screens/Main/Profile/EditProfile';
+import Faq from './src/screens/Main/About/Faq';
+import ViewAllFilter from './src/screens/Main/ViewAllFilter/ViewAllFilter';
+import BrandCar from './src/screens/Main/Brandcar/BrandCar';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +79,10 @@ export default function App() {
             <Stack.Screen  options={{headerShown: false}}  name='PaymentApp' component={PaymentApp}/>
             <Stack.Screen  options={{headerShown: false}}  name='Success' component={Success}/>
             <Stack.Screen  options={{headerShown: false}}  name='BookingDetails' component={BookingDetails}/>
+            <Stack.Screen  options={{headerShown: false}}  name='EditProfile' component={EditProfile}/>
+            <Stack.Screen  options={{headerShown: false}}  name='Faq' component={Faq}/>
+            <Stack.Screen  options={{headerShown: false}}  name='ViewAllFilter' component={ViewAllFilter}/>
+            <Stack.Screen  options={{headerShown: false}}  name='BrandCar' component={BrandCar}/>
             </> : <><Stack.Screen options={{headerShown: false}}  name='Login' component={Login}/>
             <Stack.Screen options={{headerShown: false}}  name='Register' component={Register}/></> 
           }

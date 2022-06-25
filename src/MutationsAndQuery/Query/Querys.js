@@ -25,6 +25,7 @@ export const CREATE_PAYMENT_INTENT = gql`
 export const GET_USER_INFO = gql`
     query GetUser($email: String) {
         User (email: $email){
+        id
         name
         phone
         email
@@ -59,4 +60,19 @@ export const GET_USERS_BOOKINGS = gql`
             licenseDate
     }
   }
+`
+
+export const GET_ALL_BRAND_CARS = gql`
+    query GetBrandCars($input: BrandInput) {
+        BrandCar(input: $input) {
+            id
+            carName
+            perDayPrice
+            location
+            seat
+            brand
+            description
+            carimg
+        }
+    }
 `

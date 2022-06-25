@@ -51,3 +51,14 @@ export const ADD_BOOKINGS = gql`
         }
     }
 `
+
+export const UPDATE_PROFILE = gql`
+    mutation updateProfile ($input: UpdateProfileInput){
+        UpdateUserPorfile(input: $input){
+            id
+            name
+            phone
+            img
+        }
+    }
+`

@@ -9,6 +9,7 @@ import MainText from '../../../components/MainText/MainText';
 import { colors } from '../../../theme/colors';
 import Buttons from '../../../components/Buttons/Buttons';
 import { Ionicons } from '@expo/vector-icons'; 
+import { BookingInfostyles } from '../../../Styles/CarDetailsStyle';
 
 const BookingInfo = ({route, navigation}) => {
     const [startDate, setStartDate] = useState(new Date());
@@ -63,12 +64,12 @@ const BookingInfo = ({route, navigation}) => {
     <SafeAreaView>
     <Header title='Time & Location' backbtn={true} />
     <View style={{marginHorizontal: 45}}>
-        <Input onChangeText={(text) => setLocation(text)} customStyles={styles.inputs} placeholder='Enter Your Location'/>
+        <Input onChangeText={(text) => setLocation(text)} customStyles={BookingInfostyles.inputs} placeholder='Enter Your Location'/>
     </View>
 
-    <MainText preset='h4' style={styles.tripTitle}>Start Trip</MainText>
-    <View style={styles.DateTimeContainer}>
-        <View style={styles.icons}>
+    <MainText preset='h4' style={BookingInfostyles.tripTitle}>Start Trip</MainText>
+    <View style={BookingInfostyles.DateTimeContainer}>
+        <View style={BookingInfostyles.icons}>
             <TouchableOpacity onPress={() => ShowPicker('date') }>
                 <FontAwesome5 name="calendar-alt" size={40} color="black" />
             </TouchableOpacity>
@@ -76,12 +77,12 @@ const BookingInfo = ({route, navigation}) => {
                 <MaterialCommunityIcons name="clock-time-eight-outline" size={40} color="black" />
             </TouchableOpacity>
         </View>
-        <MainText style={styles.dateText}>Selected: {startDate.toLocaleString()}</MainText>
+        <MainText style={BookingInfostyles.dateText}>Selected: {startDate.toLocaleString()}</MainText>
     </View>
 
-    <MainText preset='h4' style={styles.tripTitle}>End Trip</MainText>
-    <View style={styles.DateTimeContainer}>
-    <View style={styles.icons}>
+    <MainText preset='h4' style={BookingInfostyles.tripTitle}>End Trip</MainText>
+    <View style={BookingInfostyles.DateTimeContainer}>
+    <View style={BookingInfostyles.icons}>
         <TouchableOpacity onPress={() => ShowPicker2('date') }>
             <FontAwesome5 name="calendar-alt" size={40} color="black" />
         </TouchableOpacity>
@@ -89,10 +90,10 @@ const BookingInfo = ({route, navigation}) => {
             <MaterialCommunityIcons name="clock-time-eight-outline" size={40} color="black" />
         </TouchableOpacity>
     </View>
-    <MainText  style={styles.dateText}>Selected: {endDate.toLocaleString()}</MainText>
+    <MainText  style={BookingInfostyles.dateText}>Selected: {endDate.toLocaleString()}</MainText>
     </View>
 
-    <Buttons onPress={NavigationHandler} title='Next' customStyles2={styles.button2} customStyles={styles.buttons}/>
+    <Buttons onPress={NavigationHandler} title='Next' customStyles2={BookingInfostyles.button2} customStyles={BookingInfostyles.buttons}/>
 
       {show && (
         <DateTimePicker
@@ -117,58 +118,3 @@ const BookingInfo = ({route, navigation}) => {
 }
 
 export default BookingInfo;
-
-const styles = StyleSheet.create({
-    DateTimeContainer: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      
-    },
-    icons:{
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        marginTop: 20,
-        
-    },
-    tripTitle:{
-        fontWeight: 'bold',
-        alignSelf: 'center',
-        marginTop: 30,
-
-    },
-    inputs:{
-        borderBottomWidth: 1,
-        borderBottomColor: colors.Green,
-    },
-    dateText:{
-        alignSelf: 'center',  marginTop: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.Green,
-        paddingBottom: 10
-    },
-    buttons:{
-        width: 275,
-        marginHorizontal: 60,
-        height: 60,
-        marginTop: 30,
-        borderRadius: 10
-    },
-    button2:{
-        fontSize: 18
-    }
-  });
-
-
-  // const showMode = (currentMode) => {
-  //   setShow(true);
-  //   setMode(currentMode);
-  // };
-
-  // const showDatepicker = () => {
-  //   showMode('date');
-  // };
- 
-  // const showTimepicker = () => {
-  //   showMode('time');
-  // }; {info: {location: location, diffDays: diffDays, startDate: seting1, endDate: seting2}}
