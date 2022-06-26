@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {ActivityIndicator, Image, View, ScrollView , TouchableOpacity, FlatList} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../../components/Header/Header';
@@ -8,6 +8,7 @@ import { GET_USERS_BOOKINGS } from '../../../MutationsAndQuery/Query/Querys';
 import { Entypo, MaterialCommunityIcons } from '@expo/vector-icons';
 import { colors } from '../../../theme/colors';
 import { Mybookingstyles } from '../../../Styles/MybookingStyles';
+import { useFocusEffect, useIsFocused} from '@react-navigation/native';
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
 "July", "August", "September", "October", "November", "December"
@@ -53,7 +54,15 @@ export const BookingItems = ({item, navigation, btn}) => {
 }
 
 const MyBooking = ({navigation}) => { 
-  const {data: bookings} = useQuery(GET_USERS_BOOKINGS);
+  const {data: bookings, refetch} = useQuery(GET_USERS_BOOKINGS); 
+  const isVisible = useIsFocused();
+
+  useEffect(() => {;
+  if (isVisible) {
+    refetch()
+    console.log('visible')
+  }
+  },[isVisible])
 
   const BookingItem = ({ item }) => (
     

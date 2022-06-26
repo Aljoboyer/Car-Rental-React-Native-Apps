@@ -7,6 +7,7 @@ import Input from '../../../components/Input/Input';
 import Buttons from '../../../components/Buttons/Buttons';
 import { useState } from 'react';
 import useFirebase from '../../../FirebaseSetup/FirebaseAuth';
+import { Loginstyles } from '../../../Styles/AuthStyle';
 
 const Login = ({navigation}) => {
   const [logData, setLogData] = useState({});
@@ -19,34 +20,34 @@ const Login = ({navigation}) => {
 
   return (
     <SafeAreaView>
-      <View style={styles.LoginIntro}>
-        <View style={styles.iconContainer}>
+      <View style={Loginstyles.LoginIntro}>
+        <View style={Loginstyles.iconContainer}>
           <MaterialCommunityIcons name="car-sports" size={150} color="white" />
           <Ionicons name="location-outline" size={70} color="white" />
         </View>
         <MainText preset='title1' style={{fontSize: 40, color: colors.White}}>Aj-CarRental</MainText>
       </View>
       
-      <View style={styles.inputContainer}>
+      <View style={Loginstyles.inputContainer}>
         <MainText style={{color: colors.Green, alignSelf: 'center', marginVertical: 20}} preset='h1'>Login-Here</MainText>
-        <View style={styles.InputView}>
+        <View style={Loginstyles.InputView}>
             <MaterialIcons name="email" size={24} color={colors.Green} />
             <Input placeholder='useremail' onChangeText={(text) => {
         setLogData({...logData, email: text})
       }} />
         </View>
-        <View style={styles.InputView}>
+        <View style={Loginstyles.InputView}>
             <FontAwesome name="lock" size={24} color={colors.Green} />
             <Input placeholder='password' secureTextEntry={true} onChangeText={(text) => {
         setLogData({...logData, password: text})
       }}/>
         </View>
-        <Buttons title='Login' customStyles={styles.buttons} onPress={LoginHandler} />
+        <Buttons title='Login' customStyles={Loginstyles.buttons} onPress={LoginHandler} />
       </View>
-      <View style={styles.SocialContainer}>
+      <View style={Loginstyles.SocialContainer}>
         <MainText preset='h4' style={{fontWeight: 'bold', color: colors.Green}}>OR</MainText>
         <MainText preset='h6'>Countinue via google account</MainText>
-         <Image style={styles.loginimg} source={require("../../../../assets/google.png")} />
+         <Image style={Loginstyles.loginimg} source={require("../../../../assets/google.png")} />
          <Pressable onPress={() => navigation.navigate('Register')}>
             <MainText preset='h5'>Don't have an Account ? <MainText preset='h5' style={{fontWeight: 'bold', color: colors.Green}}>Register Now</MainText></MainText>
           </Pressable> 
@@ -57,48 +58,3 @@ const Login = ({navigation}) => {
 
 export default Login;
 
-const styles = StyleSheet.create({
-  LoginIntro:{
-    backgroundColor: colors.Green,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomLeftRadius: 100,
-    paddingBottom: 30
-  },
-  iconContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputContainer:{
-    marginHorizontal: 20,
-    marginVertical: 5
-  },
-  InputView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderColor: colors.Green,
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
-    elevation: 1,
-    shadowColor: '#01362e95',
-    borderRadius: 5,
-  },
-  buttons:{
-    width:  '100%',
-    borderRadius: 5,
-    height: 55,
-    marginVertical: 10
-  },
-  loginimg:{
-    width: 50,
-    height: 50,
-    marginVertical: 15
-  },
-  SocialContainer:{
-    flexDirection: 'column',
-    alignItems: 'center',
-  }
-});

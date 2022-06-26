@@ -1,8 +1,5 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet,View , ActivityIndicator} from 'react-native';
+import { StyleSheet,View , Image} from 'react-native';
 import { useFonts } from 'expo-font';
-import MainText from './src/components/MainText/MainText';
-import { colors } from './src/theme/colors';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Login from './src/screens/Auth/Login/Login';
@@ -23,6 +20,12 @@ import EditProfile from './src/screens/Main/Profile/EditProfile';
 import Faq from './src/screens/Main/About/Faq';
 import ViewAllFilter from './src/screens/Main/ViewAllFilter/ViewAllFilter';
 import BrandCar from './src/screens/Main/Brandcar/BrandCar';
+import LodingView from './src/components/LodingView/LodingView';
+import { useState } from 'react';
+import { slideData } from './Data';
+import { SliderrenderItem } from './src/components/SliderItem/SliderItem';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { colors } from './src/theme/colors';
 
 const Stack = createNativeStackNavigator();
 
@@ -34,10 +37,10 @@ const AppTheme = {
   }
 }
 
-
 export default function App() {
   const {user, loading} = useFirebase();
-
+  const [show, setShow] = useState(false)
+  
   const client = new ApolloClient({
     link: createUploadLink({
       uri: "http://192.168.10.106:4000/graphql"
@@ -54,41 +57,44 @@ export default function App() {
 
   if(!loaded){
     return  (
-      <SafeAreaView style={styles.LodingContainer}>
-        <ActivityIndicator color="blue" size="large" />
-      </SafeAreaView>
+      <LodingView/>
     )
   }
   if(loading){
     return  (
-      <SafeAreaView style={styles.LodingContainer}>
-        <ActivityIndicator color="blue" size="large" />
-      </SafeAreaView>
+      <LodingView/>
     )
   }
+  const onDone = () => {
+    setShow(true)
+  }
   return (
-    <ApolloProvider client={client}>
-      <NavigationContainer theme={AppTheme}> 
-        <Stack.Navigator initialRouteName='Login' >
-          {
-            user?.email ? <><Stack.Screen options={{headerShown: false}}  name='HomeRoute' component={HomeRoute}/>
-            <Stack.Screen  options={{headerShown: false}}  name='CarDetails' component={CarDetails}/>
-            <Stack.Screen  options={{headerShown: false}}  name='BookingInfo' component={BookingInfo}/>
-            <Stack.Screen  options={{headerShown: false}}  name='DrivingLicense' component={DrivingLicense}/>
-            <Stack.Screen  options={{headerShown: false}}  name='NidCard' component={NidCard}/>
-            <Stack.Screen  options={{headerShown: false}}  name='PaymentApp' component={PaymentApp}/>
-            <Stack.Screen  options={{headerShown: false}}  name='Success' component={Success}/>
-            <Stack.Screen  options={{headerShown: false}}  name='BookingDetails' component={BookingDetails}/>
-            <Stack.Screen  options={{headerShown: false}}  name='EditProfile' component={EditProfile}/>
-            <Stack.Screen  options={{headerShown: false}}  name='Faq' component={Faq}/>
-            <Stack.Screen  options={{headerShown: false}}  name='ViewAllFilter' component={ViewAllFilter}/>
-            <Stack.Screen  options={{headerShown: false}}  name='BrandCar' component={BrandCar}/>
-            </> : <><Stack.Screen options={{headerShown: false}}  name='Login' component={Login}/>
-            <Stack.Screen options={{headerShown: false}}  name='Register' component={Register}/></> 
-          }
-        </Stack.Navigator> 
-      </NavigationContainer>
-    </ApolloProvider> 
+    <>
+      {
+       show ? <ApolloProvider client={client}>
+        <NavigationContainer theme={AppTheme}> 
+          <Stack.Navigator initialRouteName='Login' >
+            {
+              user?.email ? <><Stack.Screen options={{headerShown: false}}  name='HomeRoute' component={HomeRoute}/>
+              <Stack.Screen  options={{headerShown: false}}  name='CarDetails' component={CarDetails}/>
+              <Stack.Screen  options={{headerShown: false}}  name='BookingInfo' component={BookingInfo}/>
+              <Stack.Screen  options={{headerShown: false}}  name='DrivingLicense' component={DrivingLicense}/>
+              <Stack.Screen  options={{headerShown: false}}  name='NidCard' component={NidCard}/>
+              <Stack.Screen  options={{headerShown: false}}  name='PaymentApp' component={PaymentApp}/>
+              <Stack.Screen  options={{headerShown: false}}  name='Success' component={Success}/>
+              <Stack.Screen  options={{headerShown: false}}  name='BookingDetails' component={BookingDetails}/>
+              <Stack.Screen  options={{headerShown: false}}  name='EditProfile' component={EditProfile}/>
+              <Stack.Screen  options={{headerShown: false}}  name='Faq' component={Faq}/>
+              <Stack.Screen  options={{headerShown: false}}  name='ViewAllFilter' component={ViewAllFilter}/>
+              <Stack.Screen  options={{headerShown: false}}  name='BrandCar' component={BrandCar}/>
+              </> : <><Stack.Screen options={{headerShown: false}}  name='Login' component={Login}/>
+              <Stack.Screen options={{headerShown: false}}  name='Register' component={Register}/></> 
+            }
+          </Stack.Navigator> 
+        </NavigationContainer>
+      </ApolloProvider> :  <SafeAreaView style={{flex: 1}}><AppIntroSlider renderItem={SliderrenderItem} data={slideData} onDone={onDone} showSkipButton={true} onSkip={() => setShow(true)} bottomButton={true}/></SafeAreaView>
+      }
+    </> 
   );
 }
 
@@ -96,10 +102,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  LodingContainer:{
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
   }
 });
