@@ -54,9 +54,13 @@ const Profile = ({navigation}) => {
       </View>
       <View style={Profilestyles.specificationView}>
           <ProfileScreen title='Edit Profile' iconName="profile" navigation={navigation} routes="EditProfile" />
-          <ProfileScreen title='Saved' iconName="save" navigation={navigation} />
-          <ProfileScreen title='Notification' iconName="notification" navigation={navigation} />
-          <ProfileScreen title='Terms & Condition' iconName="filetext1" navigation={navigation} />
+
+          <ProfileScreen title='Saved' iconName="save" navigation={navigation} routes="Saved"/>
+
+          <ProfileScreen title='Notification' iconName="notification" navigation={navigation} routes='Notification' />
+
+          <ProfileScreen title='Terms & Condition' iconName="filetext1" navigation={navigation} routes="TermAndC"/>
+
           <ProfileScreen title='FAQs' iconName="questioncircleo" navigation={navigation} routes="Faq" />
       </View>
       <Buttons customStyles2={Profilestyles.buttons2} customStyles={Profilestyles.buttons} title='LogOut'  onPress={LogOutHandler}/>

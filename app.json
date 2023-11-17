@@ -24,7 +24,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.joboyer.ajcarrental"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -36,6 +37,11 @@
           "enableGooglePay": true
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "13a58e21-0bfb-4d4b-a247-7e8b3db3a5b2"
+      }
+    }
   }
 }

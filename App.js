@@ -26,6 +26,9 @@ import { slideData } from './Data';
 import { SliderrenderItem } from './src/components/SliderItem/SliderItem';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { colors } from './src/theme/colors';
+import TermAndC from './src/screens/Main/TandC/TermAndC';
+import Notifications from './src/screens/Main/Notification/Notification';
+import Saved from './src/screens/Main/Saved/Saved';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,7 +46,7 @@ export default function App() {
   
   const client = new ApolloClient({
     link: createUploadLink({
-      uri: "http://192.168.10.106:4000/graphql"
+      uri: "https://car-rental-server-delta.vercel.app/graphql"
     }),
     cache: new InMemoryCache(),
   })
@@ -84,7 +87,10 @@ export default function App() {
               <Stack.Screen  options={{headerShown: false}}  name='Success' component={Success}/>
               <Stack.Screen  options={{headerShown: false}}  name='BookingDetails' component={BookingDetails}/>
               <Stack.Screen  options={{headerShown: false}}  name='EditProfile' component={EditProfile}/>
-              <Stack.Screen  options={{headerShown: false}}  name='Faq' component={Faq}/>
+              <Stack.Screen  options={{headerShown: true}}  name='Faq' component={Faq}/>
+              <Stack.Screen  options={{headerShown: true}}  name='TermAndC' component={TermAndC}/>
+              <Stack.Screen  options={{headerShown: true}}  name='Notification' component={Notifications}/>
+              <Stack.Screen  options={{headerShown: true}}  name='Saved' component={Saved}/>
               <Stack.Screen  options={{headerShown: false}}  name='ViewAllFilter' component={ViewAllFilter}/>
               <Stack.Screen  options={{headerShown: false}}  name='BrandCar' component={BrandCar}/>
               </> : <><Stack.Screen options={{headerShown: false}}  name='Login' component={Login}/>

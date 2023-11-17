@@ -10,7 +10,7 @@ const HomeCar = ({cars, navigation, horizontal}) => {
 
 const CarItem = ({ item }) => (
     <View style={HomeCarstyles.carItem}>
-        <Image style={HomeCarstyles.CarImg} source={{uri: `http://192.168.10.106:4000/${item.carimg}`}} />
+        <Image style={HomeCarstyles.CarImg} source={{uri: `https://car-rental-server-delta.vercel.app/${item.carimg}`}} />
         <MainText preset='h4' style={HomeCarstyles.CarName}>{item.carName}</MainText>
 
         <View style={HomeCarstyles.InfoContianer}>

@@ -16,10 +16,10 @@ const CarDetails = ({route, navigation}) => {
     }
   return (
     <SafeAreaView style={{flex: 1}}>
-      <ScrollView>
+      <ScrollView> 
         <Header backbtn={true} />
         <View>
-        <Image style={CarDetailstyles.CarImg} source={{uri: `http://192.168.43.45:4000/${car.carimg}`}} />
+        <Image style={CarDetailstyles.CarImg} source={{uri: `https://car-rental-server-delta.vercel.app/${car.carimg}`}} />
         </View>
         <View>
             <View style={{flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10, alignItems: 'center', flexWrap: 'wrap'}}>

@@ -6,7 +6,7 @@ import MainText from '../../../components/MainText/MainText';
 const Faq = () => {
   return (
     <SafeAreaView>
-      <MainText>This is Faqa</MainText>
+        <Text style={{color: 'gray', fontWeight: 'bold', fontSize: 20}}>FAQ Comming soon</Text>
     </SafeAreaView>
   );
 }
